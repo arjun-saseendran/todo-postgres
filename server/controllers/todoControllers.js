@@ -1,5 +1,5 @@
 import { db } from "../db/dbConnection";
-import { todos } from "../schemas/todosSchema";
+import { todos } from "../schemas/todoSchema";
 
 export const createTodo = async (req, res) => {
   try {
