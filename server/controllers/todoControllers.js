@@ -70,10 +70,14 @@ export const deleteTodo = async (req, res) => {
     }
     const deletedTodo = await db
       .delete(todos)
-      .where(eq(todos.id, deleteTodoId));
+      .where(eq(todos.id, deleteTodoId))
+      .returning();
     res
-      .status(204)
-      .json({ message: "Todo deleted successfully.", deletedTodo });
+      .status(200)
+      .json({
+        message: "Todo deleted successfully.",
+        deletedTodo,
+      });
   } catch (error) {
     res.status(500).json({ message: "Server error!" });
   }
