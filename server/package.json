@@ -1,0 +1,24 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "todo app using postgres database",
+  "keywords": [
+    "todo",
+    "postgres",
+    "express",
+    "node",
+    "drizzle"
+  ],
+  "license": "ISC",
+  "author": "arjunsaseendran",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0"
+  }
+}
