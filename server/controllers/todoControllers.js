@@ -72,12 +72,10 @@ export const deleteTodo = async (req, res) => {
       .delete(todos)
       .where(eq(todos.id, deleteTodoId))
       .returning();
-    res
-      .status(200)
-      .json({
-        message: "Todo deleted successfully.",
-        deletedTodo,
-      });
+    res.status(200).json({
+      message: "Todo deleted successfully.",
+      deletedTodo,
+    });
   } catch (error) {
     res.status(500).json({ message: "Server error!" });
   }
