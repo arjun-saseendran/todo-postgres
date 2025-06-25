@@ -1,17 +1,41 @@
-import { db } from "../db/dbConnection";
-import { todos } from "../schemas/todoSchema";
+import { db } from "../db/dbConnection.js";
+import { todos } from "../schemas/todoSchema.js";
 
+// Create todo.
 export const createTodo = async (req, res) => {
   try {
     const todo = {
       title: req.body.title,
     };
 
-    await db.insert(todos).values({ todo });
-
-    if(!todo.title){
-        return res.status(400).json({message: 'Title filed is empty!'})
+    if (!todo.title) {
+      return res.status(400).json({ message: "Title filed is empty!" });
     }
-    res.status(201).json({message: 'Todo created successfully.', todo})
-  } catch (error) {}
+
+    await db.insert(todos).values(todo);
+
+    res.status(201).json({ message: "Todo created successfully.", todo });
+  } catch (error) {
+    console.log(error);
+
+    res.status(500).json({ message: "Server error!" });
+  }
 };
+
+// Read todo.
+export const readTodo = async (req, res) => {
+  try {
+    const todosData = await db.select().from(todos);
+    if (!todosData) {
+      return res.status(404).json({ message: "No todos found!" });
+    }
+    res.status(200).json({ message: "Todos fetched successfully.", todosData });
+  } catch (error) {
+    console.log(error);
+    
+    res.status(500).json({ message: "Sever error!" });
+  }
+};
+
+// Update todo.
+
