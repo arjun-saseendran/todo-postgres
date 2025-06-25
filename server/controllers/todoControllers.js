@@ -1,3 +1,4 @@
+import { eq } from "drizzle-orm";
 import { db } from "../db/dbConnection.js";
 import { todos } from "../schemas/todoSchema.js";
 
@@ -32,10 +33,29 @@ export const readTodo = async (req, res) => {
     res.status(200).json({ message: "Todos fetched successfully.", todosData });
   } catch (error) {
     console.log(error);
-    
+
     res.status(500).json({ message: "Sever error!" });
   }
 };
 
 // Update todo.
+export const updateTodo = async (req, res) => {
+  try {
+    const updateId = req.params.id;
+    if (!updateId) {
+      return res.status(400).json({ message: "Id is not provided!" });
+    }
+    const updatedTodo = await db
+      .update(todos)
+      .set({ isComplete: true })
+      .where(eq(todos.id, updateId))
+      .returning();
+    res
+      .status(202)
+      .json({ message: "Todo updated successfully.", updatedTodo });
+  } catch (error) {
+    console.log(error);
 
+    res.status(500).json({ message: "Server error!" });
+  }
+};
