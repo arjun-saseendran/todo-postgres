@@ -59,3 +59,22 @@ export const updateTodo = async (req, res) => {
     res.status(500).json({ message: "Server error!" });
   }
 };
+
+// Delete todo.
+export const deleteTodo = async (req, res) => {
+  try {
+    const deleteTodoId = req.params.id;
+
+    if (!deleteTodoId) {
+      return res.status(400).json({ message: "Id is not provided!" });
+    }
+    const deletedTodo = await db
+      .delete(todos)
+      .where(eq(todos.id, deleteTodoId));
+    res
+      .status(204)
+      .json({ message: "Todo deleted successfully.", deletedTodo });
+  } catch (error) {
+    res.status(500).json({ message: "Server error!" });
+  }
+};
